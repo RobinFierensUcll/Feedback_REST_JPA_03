@@ -1,6 +1,7 @@
 package be.ucll.feedback.model;
 
 import be.ucll.feedback.repository.FeedbackRepository;
+import be.ucll.feedback.repository.TopicInfoRepository;
 import be.ucll.feedback.repository.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,22 @@ public class MyService {
     TopicRepository topicRepository; // dependency injection of the repository
 
     @Autowired
+    TopicInfoRepository topicInfoRepository; // dependency injection of the repository
+
+    @Autowired
     FeedbackRepository feedbackRepository; // dependency injection of the repository
 
     // no more hardcoded values here!
     public MyService() { }
+
+
+    // *************************
+    // TOPIC INFO
+    // *************************
+
+    public List<TopicInfo> getAllTopicInfos() {
+        return topicInfoRepository.findAll();
+    }
 
     // *************************
     // TOPICS

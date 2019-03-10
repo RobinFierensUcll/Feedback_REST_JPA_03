@@ -12,17 +12,17 @@ Fields will be made in that table, corresponding to the variables in the class
 in this case: topicId, title and description.
 */
 @Entity
-@Table(name = "topic")
+//@Table(name = "topic")
 public class Topic {
     // tell JPA that the field topicId will be the primary key, by adding the @Id annotation
     @Id
     private String topicId;
 
-    @NotEmpty // doet ook @NotNull
+    @NotEmpty // includes @NotNull
     @Size(min = 2, max = 30)
     private String title;
 
-    @NotEmpty // doet ook @NotNull
+    @NotEmpty // includes @NotNull
     @Size(min = 5, max = 70)
     private String description;
 
@@ -33,10 +33,9 @@ public class Topic {
     we also need to tell the system how to connect these things
     use @JoinColumn() for one relation, @JoinColumns() for multiple relations
     since the @Id's are both called "topicId"...
-    first parameter = topicId of this class
-    second parameter = topicId of feedback class -> renamed to be t_id in db table (foreign key)
+    first parameter = topicId of feedback class -> feedbackTopicId (foreign key)
+    second parameter = topicId of this class
     */
-    //@JoinColumn(name = "topicId", referencedColumnName = "t_id")
     @JoinColumn(name = "feedbackTopicId", referencedColumnName = "topicId")
     private List<Feedback> feedbacks;
     // add getter & setter for list
@@ -45,8 +44,17 @@ public class Topic {
     public void setFeedback(Feedback feedback) { this.feedbacks.add(feedback); }
     public void deleteFeedback(Feedback feedback) { this.feedbacks.remove(feedback); }
 
-    public Topic() {
-    }
+    // since a topic can have only one topic info, we need a OneToOne relationship
+    // also add CascadeType.ALL so it automatically updates the topic info as well
+    @OneToOne (cascade = CascadeType.ALL)
+    @JoinColumn(name = "topicId", referencedColumnName = "topicInfoId")
+    private TopicInfo topicInfo;
+    // add getter & setter
+    public TopicInfo getTopic() { return topicInfo; }
+    public void setTopic(TopicInfo topicInfo) { this.topicInfo = topicInfo; }
+
+    // no-args Constructor, always necessary!
+    public Topic() { }
 
     // constructor used in the CommandLineRunner, to populate the database
     public Topic(String topicId, String title, String description) {

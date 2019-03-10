@@ -11,10 +11,16 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController // need to tell Spring this is a REST controller
-public class TopicController {
+public class TopicInfoController {
     @Autowired
     MyService topicService;
 
+    @GetMapping("topicinfo")
+    public List<TopicInfo> getAllTopicInfos(){
+        return topicService.getAllTopicInfos();
+    }
+
+    /*
     @GetMapping("topic")
     public List<Topic> getAllTopics() {
         return topicService.getAllTopics();
@@ -51,8 +57,10 @@ public class TopicController {
         topicService.deleteTopic(id);
     }
 
+*/
+
     // Still the same exception handler as in the previous version
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Requested topic(s) not found!")
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Requested topic info(s) not found!")
     @ExceptionHandler(value = IllegalArgumentException.class)
     public void badIdExceptionHandler() {
     }

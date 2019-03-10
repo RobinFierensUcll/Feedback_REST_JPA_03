@@ -5,6 +5,8 @@ FROM topic
 INNER JOIN feedback
 ON topic_id = feedback_topic_id;
 
-SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
-FROM ((Orders INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
-INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
+SELECT *
+FROM (
+(topic INNER JOIN topic_info ON topic.topic_id = topic_info.topic_info_id)
+INNER JOIN feedback ON topic.topic_id  = feedback.feedback_topic_id
+);

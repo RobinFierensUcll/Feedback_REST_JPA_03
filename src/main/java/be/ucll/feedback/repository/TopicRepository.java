@@ -8,8 +8,7 @@ import java.util.List;
 
 // JpaRepository has all the common stuff, like getting all the entities,
 // create, update and delete.
-// generic types Topic and Integer as id
-// need to use Integer (not int!), since primitive types are not supported
+// generic types Topic and String as id
 @Repository  // need to tell Spring this is a repository
 public interface TopicRepository extends JpaRepository<Topic, String> {
     /*

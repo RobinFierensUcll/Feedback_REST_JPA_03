@@ -2,7 +2,9 @@ package be.ucll.feedback;
 
 import be.ucll.feedback.model.Feedback;
 import be.ucll.feedback.model.Topic;
+import be.ucll.feedback.model.TopicInfo;
 import be.ucll.feedback.repository.FeedbackRepository;
+import be.ucll.feedback.repository.TopicInfoRepository;
 import be.ucll.feedback.repository.TopicRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,7 +30,25 @@ public class Application {
     }
 
     @Bean
-    @Order(2) // do this second
+    @Order(2) // do this secondly
+    CommandLineRunner runnerInfo(TopicInfoRepository repo){
+        return feedbackArgs -> {
+            // info reizen
+            //repo.save(new TopicInfo("8/03/2019", "Veel blabla over reizen.", "reis"));
+            repo.save(new TopicInfo("reis", "8/03/2019", "Veel blabla over reizen."));
+
+            // info cursus IP
+            //repo.save(new TopicInfo("9/03/2019", "Ongeloofelijk interessante info over Spring Boot!", "ip"));
+            repo.save(new TopicInfo("ip", "9/03/2019", "Ongeloofelijk interessante info over Spring Boot!"));
+
+            // info filosofie
+            //repo.save(new TopicInfo("10/03/2019", "I think, therefore I am. But where am I?", "filo"));
+            repo.save(new TopicInfo("filo", "10/03/2019", "I think, therefore I am. But where am I?"));
+        };
+    }
+
+    @Bean
+    @Order(3) // do this thirdly
     CommandLineRunner runnerFeedbacks(FeedbackRepository repo){
         return feedbackArgs -> {
             // topic reizen
