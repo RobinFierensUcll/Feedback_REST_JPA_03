@@ -24,9 +24,9 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
 
     // new way to find all feedbacks by name, related to a specific topic
     // these are actually filters on your data
-    public List<Feedback> findByTopicIdAndName(String topicId, String name);
+    public List<Feedback> findByFeedbackTopicIdAndName(String topicId, String name);
 
     // new way to find all feedbacks related to a specific topic
     // these are actually filters on your data
-    public List<Feedback> findByTopicId(String topicId);
+    public List<Feedback> findByFeedbackTopicId(String topicId);
 }

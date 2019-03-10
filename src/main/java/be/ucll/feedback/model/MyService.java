@@ -46,7 +46,11 @@ public class MyService {
     }
 
     public void changeTopic(String id, Topic changedTopic) {
-        changedTopic.setId(id); // use id from url, so people can't mess up
+        changedTopic.setTopicId(id); // use id from url, so people can't mess up
+        // make sure we don't lose the feedbacks!
+        // get them out first, and pass them on to the new topic.
+        Topic topicToChange = this.findTopicById(id);
+        changedTopic.setFeedbacks(topicToChange.getFeedbacks());
         // if row exists with this id, row is updated, otherwise it's created
         topicRepository.save(changedTopic); // all we need to do to change a topic
     }
@@ -74,9 +78,13 @@ public class MyService {
     // *************************
 
     // just return the whole list, Spring takes care of conversion to JSON
-    public List<Feedback> getAllFeedbacks(String topicId) {
+    public List<Feedback> getAllFeedbacks() {
+        return feedbackRepository.findAll();
+    }
+
+    public List<Feedback> getAllFeedbacksPerTopic(String topicId) {
         // look at what the autocomplete comes up with if you use the repository!
-        return feedbackRepository.findByTopicId(topicId);
+        return feedbackRepository.findByFeedbackTopicId(topicId);
     }
 
     public void addFeedback(Feedback feedback) {
@@ -95,7 +103,7 @@ public class MyService {
     }
 
     public void changeFeedback(int id, Feedback changedFeedback) {
-        changedFeedback.setId(id); // use id from url, so people can't mess up
+        changedFeedback.setFeedbackId(id); // use id from url, so people can't mess up
         // if row exists with this id, row is updated, otherwise it's created
         feedbackRepository.save(changedFeedback); // all we need to do to change a feedback
     }
@@ -108,7 +116,7 @@ public class MyService {
     public List<Feedback> findFeedbackByName(String topicId, String name) {
         List<Feedback> feedbacks = new ArrayList<>();
         // needed to define the method in the repository!
-        feedbacks = feedbackRepository.findByTopicIdAndName(topicId, name);
+        feedbacks = feedbackRepository.findByFeedbackTopicIdAndName(topicId, name);
         // if nothing returned, throw an IllegalArgumentException
         if(feedbacks.isEmpty()){
             throw new IllegalArgumentException();

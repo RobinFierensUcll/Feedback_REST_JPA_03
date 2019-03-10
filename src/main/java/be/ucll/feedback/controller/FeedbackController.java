@@ -2,7 +2,6 @@ package be.ucll.feedback.controller;
 
 import be.ucll.feedback.model.Feedback;
 import be.ucll.feedback.model.MyService;
-import be.ucll.feedback.model.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +14,22 @@ public class FeedbackController {
     @Autowired
     MyService feedbackService;
 
+
+    @GetMapping("feedbacks")
+    public List<Feedback> getAllFeedbacks() {
+        return feedbackService.getAllFeedbacks();
+    }
+
     @GetMapping("topic/{topicId}/feedback")
-    public List<Feedback> getAllFeedbacks(@PathVariable String topicId) {
-        return feedbackService.getAllFeedbacks(topicId);
+    public List<Feedback> getAllFeedbacksPerTopic(@PathVariable String topicId) {
+        return feedbackService.getAllFeedbacksPerTopic(topicId);
     }
 
     @PostMapping("topic/{topicId}/feedback")
     @ResponseStatus(HttpStatus.CREATED)
     public void createNewFeedback(@RequestBody @Valid Feedback feedback, @PathVariable String topicId) {
         // create feedback and set topic, this is just to have the binding with topic
-        feedback.setTopic(new Topic(topicId,"",""));
+        feedback.setFeedbackTopicId(topicId);
         feedbackService.addFeedback(feedback);
     }
 
@@ -44,7 +49,7 @@ public class FeedbackController {
     @ResponseStatus(HttpStatus.OK)
     public void editSpecificWholeFeedback(@PathVariable String topicId, @PathVariable int id, @RequestBody @Valid Feedback changedFeedback) {
         // create feedback and set topic, this is just to have the binding with topic
-        changedFeedback.setTopic(new Topic(topicId,"",""));
+        changedFeedback.setFeedbackTopicId(topicId);
         feedbackService.changeFeedback(id, changedFeedback);
     }
 
