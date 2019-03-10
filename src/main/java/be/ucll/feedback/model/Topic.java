@@ -12,7 +12,7 @@ Fields will be made in that table, corresponding to the variables in the class
 in this case: topicId, title and description.
 */
 @Entity
-//@Table(name = "topic")
+@Table(name = "topic")
 public class Topic {
     // tell JPA that the field topicId will be the primary key, by adding the @Id annotation
     @Id

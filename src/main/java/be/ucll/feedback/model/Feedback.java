@@ -11,7 +11,7 @@ Fields will be made in that table, corresponding to the variables in the class
 in this case: feedbackId, name and feedbackMessage.
 */
 @Entity
-//@Table(name = "feedback")
+@Table(name = "feedback")
 public class Feedback {
     // tell JPA that the field feedbackId will be the primary key, by adding the @Id annotation
     @Id
