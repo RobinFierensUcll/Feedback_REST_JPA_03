@@ -1,0 +1,10 @@
+"jdbc:h2:mem:testdb" is the default h2 database created by spring boot.
+
+SELECT *
+FROM topic
+INNER JOIN feedback
+ON topic_id = feedback_topic_id;
+
+SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+FROM ((Orders INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID);
