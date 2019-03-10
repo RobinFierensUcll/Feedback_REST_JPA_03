@@ -20,44 +20,35 @@ public class TopicInfoController {
         return topicService.getAllTopicInfos();
     }
 
-    /*
-    @GetMapping("topic")
-    public List<Topic> getAllTopics() {
-        return topicService.getAllTopics();
+    @GetMapping("topic/{topicId}/info")
+    public TopicInfo getTopicInfoPerTopic(@PathVariable String topicId) {
+        return topicService.getTopicInfoPerTopic(topicId);
     }
 
-    @PostMapping("topic")
+    @PostMapping("topic/{topicId}/info")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewTopic(@RequestBody @Valid Topic topic) {
-        topicService.addTopic(topic);
-    }
-
-    @GetMapping("topic/id/{foo}")
-    public Topic getSpecificTopicById(@PathVariable("foo") String id) {
-        return topicService.findTopicById(id);
-    }
-
-    @GetMapping("topic/title/{title}")
-    public List<Topic> getSpecificTopicByTitle(@PathVariable() String title) {
-        return topicService.findTopicByTitle(title);
+    public void createNewTopicInfo(@RequestBody @Valid TopicInfo topicInfo, @PathVariable String topicId) {
+        // create topic info and set topic id, this is just to have the binding with topic
+        topicInfo.setTopicInfoId(topicId);
+        topicService.addTopicInfo(topicInfo);
     }
 
     // When a client needs to replace an existing Resource entirely, they can use PUT.
     // When they’re doing a partial update, they can use HTTP PATCH. Complicated -> for later.
-    @PutMapping("topic/{id}")
+    @PutMapping("topic/{topicId}/info")
     @ResponseStatus(HttpStatus.OK)
-    public void editSpecificWholeTopic(@PathVariable("id") String id, @RequestBody @Valid Topic changedTopic) {
-        topicService.changeTopic(id, changedTopic);
+    public void editSpecificWholeTopicInfo(@PathVariable String topicId, @RequestBody @Valid TopicInfo changedInfo) {
+        // create feedback and set topic, this is just to have the binding with topic
+        changedInfo.setTopicInfoId(topicId);
+        topicService.changeTopicInfo(topicId, changedInfo);
     }
 
-    @DeleteMapping("topic/{id}")
+    @DeleteMapping("topic/{topicId}/info/{id}")
     // HTTP 204 No Content: The server successfully processed the request, but is not returning any content
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTopic(@PathVariable("id") String id) {
-        topicService.deleteTopic(id);
+    public void deleteTopicInfo(@PathVariable String id) {
+        topicService.deleteTopicInfo(id);
     }
-
-*/
 
     // Still the same exception handler as in the previous version
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Requested topic info(s) not found!")

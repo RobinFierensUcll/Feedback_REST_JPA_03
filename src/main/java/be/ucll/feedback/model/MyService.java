@@ -33,6 +33,24 @@ public class MyService {
         return topicInfoRepository.findAll();
     }
 
+    public TopicInfo getTopicInfoPerTopic(String topicId) {
+        return topicInfoRepository.findByTopicInfoId(topicId);
+    }
+
+    public void addTopicInfo(TopicInfo topicInfo) {
+        topicInfoRepository.save(topicInfo);
+    }
+
+    public void changeTopicInfo(String topicId, TopicInfo changedInfo) {
+        changedInfo.setTopicInfoId(topicId); // use id from url, so people can't mess up
+        // if row exists with this id, row is updated, otherwise it's created
+        topicInfoRepository.save(changedInfo); // all we need to do to change a topic info
+    }
+
+    public void deleteTopicInfo(String id) {
+        topicInfoRepository.deleteById(id);
+    }
+
     // *************************
     // TOPICS
     // *************************
@@ -64,6 +82,8 @@ public class MyService {
         // get them out first, and pass them on to the new topic.
         Topic topicToChange = this.findTopicById(id);
         changedTopic.setFeedbacks(topicToChange.getFeedbacks());
+        // same for the topic info!
+        changedTopic.setTopicInfo(topicToChange.getTopicInfo());
         // if row exists with this id, row is updated, otherwise it's created
         topicRepository.save(changedTopic); // all we need to do to change a topic
     }

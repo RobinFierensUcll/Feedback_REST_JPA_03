@@ -50,8 +50,8 @@ public class Topic {
     @JoinColumn(name = "topicId", referencedColumnName = "topicInfoId")
     private TopicInfo topicInfo;
     // add getter & setter
-    public TopicInfo getTopic() { return topicInfo; }
-    public void setTopic(TopicInfo topicInfo) { this.topicInfo = topicInfo; }
+    public TopicInfo getTopicInfo() { return topicInfo; }
+    public void setTopicInfo(TopicInfo topicInfo) { this.topicInfo = topicInfo; }
 
     // no-args Constructor, always necessary!
     public Topic() { }

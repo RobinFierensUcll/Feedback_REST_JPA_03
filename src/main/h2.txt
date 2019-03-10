@@ -1,3 +1,7 @@
+*********************************************************************************
+* This is purely informational, has nothing to do with running the application! *
+*********************************************************************************
+
 "jdbc:h2:mem:testdb" is the default h2 database created by spring boot.
 
 SELECT *
